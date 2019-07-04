@@ -1,30 +1,86 @@
-def sort_012(input_list):
+class Heap:
+    def __init__(self, initial_size):
+        self.cbt = [None for _ in range(initial_size)]  # initialize arrays
+        self.next_index = 0  # denotes next index where new element should go
+
+    def heapify(self):
+        # take last node then heapify
+        curr_idx = self.next_index
+        # parent index
+        while curr_idx >= 1:
+            parent_idx = (curr_idx - 1) // 2
+            if self.cbt[curr_idx] < self.cbt[parent_idx]:
+                dummy = self.cbt[curr_idx]
+                self.cbt[curr_idx] = self.cbt[parent_idx]
+                self.cbt[parent_idx] = dummy
+                curr_idx = parent_idx
+            else:
+                return
+
+    def insert(self, data):
+        """
+        Insert `data` into the heap
+        """
+        self.cbt[self.next_index] = data
+        self.heapify()
+        self.next_index += 1
+        if self.next_index > len(self.cbt):
+            temp = self.cbt
+            self.cbt = [None for _ in range(2 * len(self.cbt))]
+
+            for index in range(self.next_index):
+                self.cbt[index] = temp[index]
+        return
+
+def rearrange_digits(input_list):
     """
-    Given an input array consisting on only 0, 1, and 2, sort the array in a single traversal.
+    Rearrange Array Elements so as to form two number such that their sum is maximum.
 
     Args:
-       input_list(list): List to be sorted
+       input_list(list): Input List
+    Returns:
+       (int),(int): Two maximum sums
     """
-    bin0 = list()
-    index_for_1 = 0
-    for i in range(0, len(input_list)):
-        if input_list[i] == 0:
-            bin0.insert(0, input_list[i])
-            index_for_1 += 1
-        elif input_list[i] == 2:
-            bin0.append(input_list[i])
+    sort_list = Heap(len(input_list))
+    for x in input_list:
+        sort_list.insert(x)
+
+    number1 = 0
+    number2 = 0
+    for x in range(0, len(sort_list.cbt)):
+        if x + 1 < len(sort_list.cbt):
+            if sort_list.cbt[x] > sort_list.cbt[x + 1]:
+                dummy = sort_list.cbt[x]
+                sort_list.cbt[x] = sort_list.cbt[x + 1]
+                sort_list.cbt[x + 1] = dummy
+        exponent = x // 2
+        if x % 2 == 0:
+            number1 += sort_list.cbt[x] * 10 ** exponent
         else:
-            bin0.insert(index_for_1, input_list[i])
-    return bin0
+            number2 += sort_list.cbt[x] * 10 ** exponent
+    return [number1, number2]
+
+
+'''
+x = rearrange_digits([1,2,3,4,5])
+print(x)
+x = rearrange_digits([4, 6, 2, 5, 9, 8])
+print(x)
+
+'''
 
 def test_function(test_case):
-    sorted_array = sort_012(test_case)
-    print(sorted_array)
-    if sorted_array == sorted(test_case):
+    output = rearrange_digits(test_case[0])
+    solution = test_case[1]
+    if sum(output) == sum(solution):
         print("Pass")
     else:
         print("Fail")
 
-test_function([0, 0, 2, 2, 2, 1, 1, 1, 2, 0, 2])
-test_function([2, 1, 2, 0, 0, 2, 1, 0, 1, 0, 0, 2, 2, 2, 1, 2, 0, 0, 0, 2, 1, 0, 2, 0, 0, 1])
-test_function([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2])
+
+test_case1 = [[1, 2, 3, 4, 5], [542, 31]]
+test_case2 = [[4, 6, 2, 5, 9, 8], [964, 852]]
+test_case3 = [[0, 0], [0, 0]]
+test_function(test_case1)
+test_function(test_case2)
+test_function(test_case3)
