@@ -4,6 +4,7 @@ class TrieNode:
         self.value = value
         self.children = {}
         self.isword = False
+        self.visited = False
         return
 
     def insert(self, char):
@@ -13,20 +14,73 @@ class TrieNode:
         return
 
     def suffixes(self, suffix = list(), node = None):
+        if self.children:
+            node = self.children
+            self.visited = True
+            suffix = list()
+            for x in node:
+                node[x].visited = True
+                if node[x].isword:
+                    suffix.append(x)
+                for y in node[x].children:
+                    #if node[x].isword:
+                    #    suffix.append(x)
+                    if node[x].children[y].isword:
+                        suffix.append(y)
+                    suffix.append(x)
+                    suffix[-1] += y
+                    self.suffix_fn(suffix, node[x].children[y])
+            suffix1 = set(suffix)
+            return suffix1
+        else:
+            raise ValueError("No contents in Trie.")
+            return
+
+    def suffix_fn(self, suffix, node = None):
+        for x in node.children:
+            visit = node.children[x].visited
+            if visit == False:
+                node.children[x].visited = True
+                suffix[-1] += x
+                if node.children[x].isword and len(node.children[x].children) > 0:
+                    suffix.append(suffix[-1])
+                elif node.children[x].isword:
+                    return
+                self.suffix_fn(suffix, node.children[x])
+        return suffix
+
+    ''' 
+    def suffixes(self, suffix = list(), node = None):
         if (node == None) and (not self.children):
             raise ValueError("There's nothing in the Trie.")
             return
         else:
             if node == None:
-                for x in self.children:
+                if len(self.children) > 1:
+                    for x in self.children:
+                        suffix.append(x)
+                        node = self.children[x]
+                        if node.isword:
+                            suffix.append(x)
+                        if node.children:
+                            self.suffixes(suffix, node)
+                        else:
+                            continue
+                else:
+                    x = self.children.keys()[0]
                     suffix.append(x)
-                    node = self.children[x]
+                    node = self.children.values()[0]
                     if node.isword:
                         suffix.append(x)
-                    if node.children:
-                        self.suffixes(suffix, node)
-                    else:
-                        continue
+                    for x in node.children:
+                        suffix[len(suffix) - 1] += x
+                        node = node.children[x]
+                        if node.isword:
+                            suffix.append(x)
+                        if node.children:
+                            self.suffixes(suffix, node)
+                        else:
+                            continue
                 return suffix
             else:
                 for x in node.children:
@@ -41,7 +95,7 @@ class TrieNode:
                             return
                     else:
                         return suffix
-
+    '''
 ## The Trie itself containing the root node and insert/find functions
 class Trie:
     def __init__(self):
@@ -82,7 +136,11 @@ wordList = [
     "trie", "trigger", "trigonometry", "tripod"
 ]
 
-wordList1 = ["cat", "cate", "catty", "cathy", "catelyn", "cathylyn", "catheter"]
+wordList1 = ["cat", "cate", "catty", "cathy", "catelyn", "cathylyn", "catalan",
+             "ant", "anthology", "antagonist", "antonym",
+             "fun", "function", "factory",
+             "trie", "trigger", "trigonometry", "tripod"
+             ]
 
 for word in wordList1:
     MyTrie.insert(word)
@@ -91,10 +149,11 @@ for word in wordList1:
 #for word in shot:
 #    MyTrie.insert(word)
 
-x = MyTrie.find("cat")
+x = MyTrie.find("c")
 # In[ ]:
 y = list()
 y = x.suffixes()
+print(y)
 
 
 MyTrie = Trie()
@@ -105,6 +164,8 @@ wordList = [
 ]
 for word in wordList:
     MyTrie.insert(word)
+
+'''
 from ipywidgets import widgets
 from IPython.display import display
 from ipywidgets import interact
@@ -119,4 +180,4 @@ def f(prefix):
         print('')
 interact(f,prefix='ant');
 
-f("tr")
+f("tr")'''
