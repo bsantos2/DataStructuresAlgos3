@@ -14,12 +14,19 @@ class TrieNode:
         return
 
     def suffixes(self, suffix = list(), node = None):
+        '''
+
+        :param suffix:
+        :param node:
+        :return:
         if self.children:
+
             node = self.children
             self.visited = True
             suffix = list()
             for x in node:
                 node[x].visited = True
+                suffix.append(x)
                 if node[x].isword:
                     suffix.append(x)
                 for y in node[x].children:
@@ -35,9 +42,24 @@ class TrieNode:
         else:
             raise ValueError("No contents in Trie.")
             return
+        '''
+        if self.children:
+            node = self.children
+            for x in node:
+                suffix.append(x)
+                if node[x].isword:
+                    suffix.append(x)
+                self.suffix_fn(suffix, node[x])
+            return suffix
+
 
     def suffix_fn(self, suffix, node = None):
-        for x in node.children:
+        '''
+
+        :param suffix:
+        :param node:
+        :return:
+                for x in node.children:
             visit = node.children[x].visited
             if visit == False:
                 node.children[x].visited = True
@@ -48,6 +70,21 @@ class TrieNode:
                     return
                 self.suffix_fn(suffix, node.children[x])
         return suffix
+        '''
+        for x in node.children:
+            visit = node.children[x].visited
+            if visit == False:
+                node.children[x].visited = True
+                suffix[-1] += x
+                if node.children[x].isword and node.children[x].children:
+                    suffix.append(suffix[-1])
+                elif node.children[x].isword and not node.children[x].children:
+                    return self.suffix_fn(suffix, node.children)
+                return self.suffix_fn(suffix, node.children[x])
+            else:
+                continue
+        return suffix
+
 
     ''' 
     def suffixes(self, suffix = list(), node = None):
@@ -100,6 +137,7 @@ class TrieNode:
 class Trie:
     def __init__(self):
         self.root = None
+        self.visited = False
 
     def insert(self, word):
         current = self.root
@@ -149,7 +187,7 @@ for word in wordList1:
 #for word in shot:
 #    MyTrie.insert(word)
 
-x = MyTrie.find("c")
+x = MyTrie.find("ca")
 # In[ ]:
 y = list()
 y = x.suffixes()
