@@ -13,126 +13,35 @@ class TrieNode:
         self.children[char] = TrieNode(char)
         return
 
-    def suffixes(self, suffix = list(), node = None):
-        '''
-
-        :param suffix:
-        :param node:
-        :return:
+    def suffixes(self, suffix = list()):
         if self.children:
-
-            node = self.children
-            self.visited = True
             suffix = list()
-            for x in node:
-                node[x].visited = True
+            for x in self.children:
                 suffix.append(x)
-                if node[x].isword:
+                if self.children[x].isword and self.children[x].children:
                     suffix.append(x)
-                for y in node[x].children:
-                    #if node[x].isword:
-                    #    suffix.append(x)
-                    if node[x].children[y].isword:
-                        suffix.append(y)
-                    suffix.append(x)
-                    suffix[-1] += y
-                    self.suffix_fn(suffix, node[x].children[y])
-            suffix1 = set(suffix)
-            return suffix1
-        else:
-            raise ValueError("No contents in Trie.")
-            return
-        '''
-        if self.children:
-            node = self.children
-            for x in node:
-                suffix.append(x)
-                if node[x].isword:
-                    suffix.append(x)
-                self.suffix_fn(suffix, node[x])
+                self.suffix_fn(suffix, self.children[x])
+            while True:
+                try:
+                    suffix.remove('')
+                except:
+                    return suffix
             return suffix
 
 
     def suffix_fn(self, suffix, node = None):
-        '''
-
-        :param suffix:
-        :param node:
-        :return:
-                for x in node.children:
-            visit = node.children[x].visited
-            if visit == False:
-                node.children[x].visited = True
-                suffix[-1] += x
-                if node.children[x].isword and len(node.children[x].children) > 0:
-                    suffix.append(suffix[-1])
-                elif node.children[x].isword:
-                    return
-                self.suffix_fn(suffix, node.children[x])
-        return suffix
-        '''
         for x in node.children:
-            visit = node.children[x].visited
-            if visit == False:
-                node.children[x].visited = True
+            if node.children[x].isword and not node.children[x].children:
                 suffix[-1] += x
-                if node.children[x].isword and node.children[x].children:
-                    suffix.append(suffix[-1])
-                elif node.children[x].isword and not node.children[x].children:
-                    return self.suffix_fn(suffix, node.children)
-                return self.suffix_fn(suffix, node.children[x])
+                suffix.append('')
+            elif node.children[x].isword and node.children[x].children:
+                suffix[-1] += x
+                suffix.append(suffix[-1])
             else:
-                continue
+                suffix[-1] += x
+            self.suffix_fn(suffix, node.children[x])
         return suffix
 
-
-    ''' 
-    def suffixes(self, suffix = list(), node = None):
-        if (node == None) and (not self.children):
-            raise ValueError("There's nothing in the Trie.")
-            return
-        else:
-            if node == None:
-                if len(self.children) > 1:
-                    for x in self.children:
-                        suffix.append(x)
-                        node = self.children[x]
-                        if node.isword:
-                            suffix.append(x)
-                        if node.children:
-                            self.suffixes(suffix, node)
-                        else:
-                            continue
-                else:
-                    x = self.children.keys()[0]
-                    suffix.append(x)
-                    node = self.children.values()[0]
-                    if node.isword:
-                        suffix.append(x)
-                    for x in node.children:
-                        suffix[len(suffix) - 1] += x
-                        node = node.children[x]
-                        if node.isword:
-                            suffix.append(x)
-                        if node.children:
-                            self.suffixes(suffix, node)
-                        else:
-                            continue
-                return suffix
-            else:
-                for x in node.children:
-                    suffix[len(suffix) - 1] += x
-                    if node.children[x].isword and node.children[x].children:
-                        suffix.append(suffix[len(suffix) - 1])
-                    if node.children:
-                        node = node.children[x]
-                        if node.children:
-                            return self.suffixes(suffix, node)
-                        else:
-                            return
-                    else:
-                        return suffix
-    '''
 ## The Trie itself containing the root node and insert/find functions
 class Trie:
     def __init__(self):
@@ -162,48 +71,34 @@ class Trie:
             Exception('Cannot find your prefix')
             return
         else:
-            for x in prefix:
-                if current.children[x] is not None:
-                    current = current.children[x]
+            try:
+                for x in prefix:
+                    if current.children[x] is not None:
+                        current = current.children[x]
+            except:
+                print('The word you want does not exist in trie.')
+                return None
         return current
 
 MyTrie = Trie()
-wordList = [
-    "ant", "anthology", "antagonist", "antonym",
-    "fun", "function", "factory",
-    "trie", "trigger", "trigonometry", "tripod"
-]
-
-wordList1 = ["cat", "cate", "catty", "cathy", "catelyn", "cathylyn", "catalan",
+wordList = ["cat", "cate", "catty", "cathy", "catelyn", "cathylyn", "catalan", "catheter",
              "ant", "anthology", "antagonist", "antonym",
              "fun", "function", "factory",
              "trie", "trigger", "trigonometry", "tripod"
              ]
 
-for word in wordList1:
-    MyTrie.insert(word)
-
-#wordList2 = [""]
-#for word in shot:
-#    MyTrie.insert(word)
-
-x = MyTrie.find("ca")
-# In[ ]:
-y = list()
-y = x.suffixes()
-print(y)
-
-
-MyTrie = Trie()
-wordList = [
-    "ant", "anthology", "antagonist", "antonym",
-    "fun", "function", "factory",
-    "trie", "trigger", "trigonometry", "tripod"
-]
 for word in wordList:
     MyTrie.insert(word)
 
-'''
+
+#My test sequence
+#x = MyTrie.find("x")
+#y = list()
+#y = x.suffixes()
+#print(y)
+
+
+
 from ipywidgets import widgets
 from IPython.display import display
 from ipywidgets import interact
@@ -218,4 +113,17 @@ def f(prefix):
         print('')
 interact(f,prefix='ant');
 
-f("tr")'''
+#Example 1: Can't find the suffixes because it does not exist in the first place
+print("\nExample 1")
+f("x")
+#Error is printed
+
+#Example 2: tri
+print("\nExample 2")
+f("tri")
+#Prints: gger, gonometry, e, pod
+
+#Example 3: c
+print("\nExample 3")
+f("c")
+#Prints: at, ate, atty, athy, atelyn, athylyn, atalan, atheter
