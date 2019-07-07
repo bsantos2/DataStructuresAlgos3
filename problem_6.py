@@ -30,11 +30,23 @@ def merge_some(left, right):
     merged += right[right_index:]
     return merged
 
+def min_max_o_n(list):
+    minList = list[0]
+    maxList = list[0]
+    for x in list:
+        if x < minList:
+            minList = x
+        if x > maxList:
+            maxList = x
+    result = tuple()
+    result = (minList, maxList)
+    return result
 ## Example Test Case of Ten Integers
 import random
 
 for k in range (0, 4):
     l = [i for i in range(0, 10)]  # a list containing 0 - 9
     random.shuffle(l)
-    print ("Trial" + str(k) + "\n")
+    print ("\nTrial" + str(k))
     print ("Pass" if ((0, 9) == get_min_max(l)) else "Fail")
+    print ("Pass for bonus routine" if ((0, 9) == min_max_o_n(l)) else "Fail")
