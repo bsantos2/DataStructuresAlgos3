@@ -60,15 +60,6 @@ def rearrange_digits(input_list):
             number2 += sort_list.cbt[x] * 10 ** exponent
     return [number1, number2]
 
-
-'''
-x = rearrange_digits([1,2,3,4,5])
-print(x)
-x = rearrange_digits([4, 6, 2, 5, 9, 8])
-print(x)
-
-'''
-
 def test_function(test_case):
     output = rearrange_digits(test_case[0])
     solution = test_case[1]
