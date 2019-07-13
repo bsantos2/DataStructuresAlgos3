@@ -5,17 +5,19 @@ def sort_012(input_list):
     Args:
        input_list(list): List to be sorted
     """
+    bin = list()
     bin0 = list()
-    index_for_1 = 0
+    bin1 = list()
+    bin2 = list()
     for i in range(0, len(input_list)):
         if input_list[i] == 0:
-            bin0.insert(0, input_list[i])
-            index_for_1 += 1
-        elif input_list[i] == 2:
             bin0.append(input_list[i])
+        elif input_list[i] == 2:
+            bin2.append(input_list[i])
         else:
-            bin0.insert(index_for_1, input_list[i])
-    return bin0
+            bin1.append(input_list[i])
+    bin = bin0 + bin1 + bin2
+    return bin
 
 def test_function(test_case):
     sorted_array = sort_012(test_case)

@@ -1,0 +1,9 @@
+The Babylonian method was chosen because time wise, to search for the output of square root function the error gets reduced the more iteration were done. 
+
+https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Convergence
+Taken from above, the convergence is:
+e(n+1) = e(n)^2 / (2 * (1 + e(n))
+
+Since the convergence is quadratic and not linear/faster. It could be ~O(log(n)).
+
+Space wise, to implement the formula, we have variables x, y, guess and ans. Where x is int(guess) or f(n), while y is int(ans) or f(n+1). Since the number of space required does not increase per iteration, and just basically needing only the above variables, we have space complexity of O(c), where c is constant.

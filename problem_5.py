@@ -4,7 +4,6 @@ class TrieNode:
         self.value = value
         self.children = {}
         self.isword = False
-        self.visited = False
         return
 
     def insert(self, char):
@@ -46,7 +45,6 @@ class TrieNode:
 class Trie:
     def __init__(self):
         self.root = None
-        self.visited = False
 
     def insert(self, word):
         current = self.root
