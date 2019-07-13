@@ -97,9 +97,9 @@ for word in wordList:
 
 
 
-from ipywidgets import widgets
-from IPython.display import display
-from ipywidgets import interact
+#from ipywidgets import widgets
+#from IPython.display import display
+#from ipywidgets import interact
 def f(prefix):
     if prefix != '':
         prefixNode = MyTrie.find(prefix)
@@ -109,7 +109,7 @@ def f(prefix):
             print(prefix + " not found")
     else:
         print('')
-interact(f,prefix='ant');
+#interact(f,prefix='ant');
 
 #Example 1: Can't find the suffixes because it does not exist in the first place
 print("\nExample 1")
