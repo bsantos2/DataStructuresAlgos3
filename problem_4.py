@@ -5,7 +5,6 @@ def sort_012(input_list):
     Args:
        input_list(list): List to be sorted
     """
-    bin = list()
     bin0 = list()
     bin1 = list()
     bin2 = list()

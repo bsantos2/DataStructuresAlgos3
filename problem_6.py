@@ -32,6 +32,7 @@ def merge_some(left, right):
 
 #My answer to O(n) challenge. It's possible. Recording either the min or max while doing one by one check,
 #I was able to return the right answers with O(n), one pass of a for loop
+#But this is really not a sort.
 def min_max_o_n(list):
     minList = list[0]
     maxList = list[0]

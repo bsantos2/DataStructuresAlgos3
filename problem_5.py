@@ -88,15 +88,6 @@ wordList = ["cat", "cate", "catty", "cathy", "catelyn", "cathylyn", "catalan", "
 for word in wordList:
     MyTrie.insert(word)
 
-
-#My test sequence
-#x = MyTrie.find("x")
-#y = list()
-#y = x.suffixes()
-#print(y)
-
-
-
 #from ipywidgets import widgets
 #from IPython.display import display
 #from ipywidgets import interact

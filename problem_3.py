@@ -75,3 +75,5 @@ test_case3 = [[0, 0], [0, 0]]
 test_function(test_case1)
 test_function(test_case2)
 test_function(test_case3)
+#All outputs should say pass
+#0,0 should yield 0,0 as the corner case

@@ -1,0 +1,8 @@
+To sort the numbers, in time, the complexity is O(n log n), as the process involves sorting numbers in small sections at a time, then merging two of these smaller arrays. This process is repeated until the merged array is same size as the original array. 
+
+For space complexity, it's O(n). Although n > number of elements in that array because storage is needed to place the smaller pieces of array required for merge sort. 
+
+To find the max/min, the first and last elements of sorted array is used.
+
+The attempt for max and min search is completed by O(n) for the bonus case, but it's not actually a sort because simply the max and min numbers are stored as the array is traversed element per element. 
+

@@ -1,0 +1,5 @@
+To make this work, the numbers need to be sorted from largest to smallest, redistribute each digit to one number or the other. The largest number is multiplied by 10^(exponent), where exponent is len(sort_list) // 2. 
+
+The sort used is heap_sort, with time complexity of O(n log n). The space complexity is O(1). The same array is used, but recursively through out the sort. To put the numbers in order in the binary tree, we just need to swap positions with the numbers until the largest number is at the top of the binary tree. 
+
+After the sort, O(n) in time is done to put each digit in one of the two numbers, to eventually maximize the sum of the digits of those 2 numbers. 

@@ -57,7 +57,6 @@ class Router:
         # You will need to split the path and pass the pass parts
         # as a list to the RouteTrie
         if handler is None:
-            #self.handler = path.replace('/', ' ') + " Handler"
             self.handler = self.default_handler
         else:
             self.handler = handler

@@ -1,0 +1,3 @@
+All the words in a path are stored in a Trie. The search for the end destination of desired path is O(n), since at a node, each element in the children list is searched for a match. If that child match is a node that also has children, then it repeats the sequence of searching the children list for a match. 
+
+Space wise, it's O(n), since to build the trie, every word corresponds to a node. If there's any word that is common between two paths at the same level of a trie, then that single node for that word would suffice. No need to build a separate node for the same word at that same level. 

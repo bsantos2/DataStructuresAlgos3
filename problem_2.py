@@ -29,16 +29,6 @@ def rotated_array_search(input_list, number, start_index, stop_index, first_time
     while first_time:
         for i in range(0, len(input_list) - 1):
             if input_list[i] > input_list[i + 1]:
-                '''
-                x = input_list[:(i + 1)]
-                y = input_list[(i + 1):]
-                input_list = y + x
-                first_time = False
-                start_index = 0
-                stop_index = len(input_list) - 1
-                adjust = i + 1
-                input_list_length = input_list_len
-                '''
                 mid_index = i + 1
                 break
             else:

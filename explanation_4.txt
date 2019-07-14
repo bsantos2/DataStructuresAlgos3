@@ -1,0 +1,1 @@
+O(n) in time, with single traversal is done in this problem by doing a for loop, then placing each number to one of the three buckets (0, 1 or 2). Once this process is done, bin0, bin1, and bin2 are connected/appended together. This is a very simple case of bucket sort. For space complexity, O(n), as each digit is placed in new lists of bin0, bin1 or bin2. 
