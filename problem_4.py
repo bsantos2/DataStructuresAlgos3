@@ -1,21 +1,25 @@
-def sort_012(input_list):
+def sort_012(input_list = []):
     """
     Given an input array consisting on only 0, 1, and 2, sort the array in a single traversal.
 
     Args:
        input_list(list): List to be sorted
     """
-    bin0 = list()
-    bin1 = list()
-    bin2 = list()
-    for i in range(0, len(input_list)):
-        if input_list[i] == 0:
-            bin0.append(input_list[i])
-        elif input_list[i] == 2:
-            bin2.append(input_list[i])
-        else:
-            bin1.append(input_list[i])
-    bin = bin0 + bin1 + bin2
+    if input_list:
+        bin0 = list()
+        bin1 = list()
+        bin2 = list()
+        for i in range(0, len(input_list)):
+            if input_list[i] == 0:
+                bin0.append(input_list[i])
+            elif input_list[i] == 2:
+                bin2.append(input_list[i])
+            else:
+                bin1.append(input_list[i])
+        bin = bin0 + bin1 + bin2
+    else:
+        print('Your list is empty')
+        bin = [-9999]
     return bin
 
 def test_function(test_case):
@@ -26,6 +30,8 @@ def test_function(test_case):
     else:
         print("Fail")
 
-test_function([0, 0, 2, 2, 2, 1, 1, 1, 2, 0, 2])
-test_function([2, 1, 2, 0, 0, 2, 1, 0, 1, 0, 0, 2, 2, 2, 1, 2, 0, 0, 0, 2, 1, 0, 2, 0, 0, 1])
-test_function([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2])
+test_function([0, 0, 2, 2, 2, 1, 1, 1, 2, 0, 2]) #pass
+test_function([2, 1, 2, 0, 0, 2, 1, 0, 1, 0, 0, 2, 2, 2, 1, 2, 0, 0, 0, 2, 1, 0, 2, 0, 0, 1]) #pass
+test_function([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2]) #pass
+sort_012([]) #print Your list is empty, and bin = -9999
+sort_012()   #print Your list is empty, and bin = -9999

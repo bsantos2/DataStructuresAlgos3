@@ -10,6 +10,9 @@ def sqrt(number):
     """
     if number == 0:
         return 0
+    elif number < 0:
+        print("Complex root out of scope. Please input positive number")
+        return
     else:
         guess = float(number) / 2
         num = float(number)
@@ -30,3 +33,4 @@ print ("Pass" if  (0 == sqrt(0)) else "Fail")   #print 0
 print ("Pass" if  (4 == sqrt(16)) else "Fail")  #print 4
 print ("Pass" if  (1 == sqrt(1)) else "Fail")   #print 1
 print ("Pass" if  (5 == sqrt(27)) else "Fail")  #print 5
+print (sqrt(-1)) #print error message

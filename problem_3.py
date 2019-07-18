@@ -41,24 +41,28 @@ def rearrange_digits(input_list):
     Returns:
        (int),(int): Two maximum sums
     """
-    sort_list = Heap(len(input_list))
-    for x in input_list:
-        sort_list.insert(x)
+    if input_list:
+        sort_list = Heap(len(input_list))
+        for x in input_list:
+            sort_list.insert(x)
 
-    number1 = 0
-    number2 = 0
-    for x in range(0, len(sort_list.cbt)):
-        if x + 1 < len(sort_list.cbt):
-            if sort_list.cbt[x] > sort_list.cbt[x + 1]:
-                dummy = sort_list.cbt[x]
-                sort_list.cbt[x] = sort_list.cbt[x + 1]
-                sort_list.cbt[x + 1] = dummy
-        exponent = x // 2
-        if x % 2 == 0:
-            number1 += sort_list.cbt[x] * 10 ** exponent
-        else:
-            number2 += sort_list.cbt[x] * 10 ** exponent
-    return [number1, number2]
+        number1 = 0
+        number2 = 0
+        for x in range(0, len(sort_list.cbt)):
+            if x + 1 < len(sort_list.cbt):
+                if sort_list.cbt[x] > sort_list.cbt[x + 1]:
+                    dummy = sort_list.cbt[x]
+                    sort_list.cbt[x] = sort_list.cbt[x + 1]
+                    sort_list.cbt[x + 1] = dummy
+            exponent = x // 2
+            if x % 2 == 0:
+                number1 += sort_list.cbt[x] * 10 ** exponent
+            else:
+                number2 += sort_list.cbt[x] * 10 ** exponent
+        return [number1, number2]
+    else:
+        print("Input list is empty")
+        return [-99999, -99999]
 
 def test_function(test_case):
     output = rearrange_digits(test_case[0])
@@ -72,8 +76,12 @@ def test_function(test_case):
 test_case1 = [[1, 2, 3, 4, 5], [542, 31]]
 test_case2 = [[4, 6, 2, 5, 9, 8], [964, 852]]
 test_case3 = [[0, 0], [0, 0]]
+test_case4 = [[], [-99999, -99999]]
 test_function(test_case1)
 test_function(test_case2)
 test_function(test_case3)
+test_function(test_case4)
 #All outputs should say pass
 #0,0 should yield 0,0 as the corner case
+#[] should yield [-99999, -99999], because it's a corner case without relevant result as it's empty
+#[] also prints warning message that list is empty
