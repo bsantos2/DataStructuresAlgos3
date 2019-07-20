@@ -6,6 +6,17 @@ class rot_search:
         self.first_time = True
         self.adjust = 0
         self.input_list_len = 0
+def find_pivot(input_list, pivot = 0):
+    mid = len(input_list) // 2
+    if len(input_list) == 1:
+        return pivot
+    else:
+        if input_list[mid] > input_list[-1]:
+            pivot = pivot + mid
+            return find_pivot(input_list[mid:], pivot)
+        else:
+            pivot = pivot - mid
+            return find_pivot(input_list[:mid], pivot)
 
 def rotated_array_search(input_list, number, start_index, stop_index, first_time = False):
     """
@@ -27,12 +38,12 @@ def rotated_array_search(input_list, number, start_index, stop_index, first_time
     mid_index = len(input_list) // 2
 
     while first_time:
-        for i in range(0, len(input_list) - 1):
-            if input_list[i] > input_list[i + 1]:
-                mid_index = i + 1
-                break
-            else:
-                continue
+        #Do this process only in beginning if array is not sorted
+        if input_list[-1] > input_list[0]: #sorted
+            break
+        mid_index = find_pivot(input_list, mid_index)
+        if mid_index == -1:
+            mid_index = len(input_list) // 2
         break
 
     left_min = input_list[0]
