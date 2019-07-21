@@ -4,6 +4,21 @@ class TrieNode:
         self.value = value
         self.children = {}
         self.isword = False
+        self.word = None
+        return
+
+    def clean_trie(self, node):
+        if node:
+            for x in node:
+                if node[x]:
+                    node[x].word = None
+                    self.clean_triefn(node[x])
+        return
+
+    def clean_triefn(self, node):
+        for x in node.children:
+            node.children[x].word = None
+            self.clean_triefn(node.children[x])
         return
 
     def insert(self, char):
@@ -20,6 +35,7 @@ class TrieNode:
                 if self.children[x].isword and self.children[x].children:
                     suffix.append(x)
                 self.suffix_fn(suffix, self.children[x])
+            self.clean_trie(self.children)
             while True:
                 try:
                     suffix.remove('')
@@ -30,6 +46,11 @@ class TrieNode:
 
     def suffix_fn(self, suffix, node = None):
         for x in node.children:
+            if len(node.children) > 1:
+                if node.word is None:
+                    node.word = suffix[-1]
+            if node.word is not None and node.children and suffix[-1] != node.word:
+                suffix.append(node.word)
             if node.children[x].isword and not node.children[x].children:
                 suffix[-1] += x
                 suffix.append('')
@@ -41,9 +62,11 @@ class TrieNode:
             self.suffix_fn(suffix, node.children[x])
         return suffix
 
+
+
 ## The Trie itself containing the root node and insert/find functions
 class Trie:
-    def __init__(self):
+    def __init__(self, current_node = None):
         self.root = None
 
     def insert(self, word):
@@ -73,6 +96,7 @@ class Trie:
                 for x in prefix:
                     if current.children[x] is not None:
                         current = current.children[x]
+                self.current_node = current
             except:
                 print('The word you want does not exist in trie.')
                 return None
@@ -109,10 +133,25 @@ f("x")
 
 #Example 2: tri
 print("\nExample 2")
-f("tri")
-#Prints: gger, gonometry, e, pod
+f("tr")
+#Prints: igger, igonometry, ie, ipod
 
 #Example 3: c
 print("\nExample 3")
 f("c")
 #Prints: at, ate, atty, athy, atelyn, athylyn, atalan, atheter
+
+#Example 4: ca
+print("\nExample 4")
+f("cat")
+#Prints: e, ty, hy, elyn, hylyn, alan, heter
+
+#Example 5: cat
+print("\nExample 5")
+f("ca")
+#Prints: t, te, tty, thy, telyn, thylyn, talan, theter
+
+#Example 6: cath
+print("\nExample 6")
+f("cath")
+#Prints: y, ylyn, eter
