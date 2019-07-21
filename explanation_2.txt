@@ -1,5 +1,5 @@
 To perform the search, the binary search method was used, with respective O(log(n)). Instead of searching one by one for a match for O(n), the array was divided in to two recursively, to see whether or not number belongs to left or right bin. 
 
-Binary search works under the premise that it is sorted. For rotated array search, the index where the lowest number starts again is noted so that we know which bin to place a number to. If there's no rotation, the default index is the middle one. 
+Binary search works under the premise that it is sorted. Since this is a rotated array case, another O(log n) algorithm was added to find the pivot (where ever number all of a sudden decreases in value, indicating where the rotation happened). 
 
 For space, the spatial complexity is O(mn), where m is the number of time the function is called during recursion, and n is the length of the list. Note that per iteration, the n will reduce per call because we only focus on smaller segments as we focus the search more.
